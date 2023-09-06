@@ -34,7 +34,11 @@
 (def ans (sci/create-ns 'clj-kondo.hooks-api nil))
 
 (def api-ns
-  {'keyword-node api/keyword-node
+  {'annotate api/annotate
+   'macroexpand api/macroexpand
+   'assert-children-nodes api/assert-children-nodes
+   'node? api/node?
+   'keyword-node api/keyword-node
    'keyword-node? api/keyword-node?
    'string-node api/string-node
    'string-node? api/string-node?
@@ -46,6 +50,8 @@
    'map-node? api/map-node?
    'list-node api/list-node
    'list-node? api/list-node?
+   'set-node api/set-node
+   'set-node? api/set-node?
    'sexpr api/sexpr
    'tag api/tag
    'reg-finding! api/reg-finding!
@@ -53,7 +59,11 @@
    'coerce api/coerce
    'ns-analysis api/ns-analysis
    'generated-node? api/generated-node?
-   'resolve api/resolve})
+   'resolve api/resolve
+   'walk api/walk
+   'prewalk api/prewalk
+   'parse-string api/parse-string
+   'pprint api/pprint})
 
 (defn initial-ctx []
   (sci/init {:namespaces {'clojure.core {'time (with-meta time* {:sci/macro true})}

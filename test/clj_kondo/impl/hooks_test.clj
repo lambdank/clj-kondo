@@ -2,10 +2,21 @@
   (:require
    [clj-kondo.hooks-api :as hooks-api]
    [clj-kondo.impl.core :as core]
+   [clj-kondo.impl.hooks :as hooks.impl]
    [clj-kondo.impl.utils :as utils :refer [parse-string *ctx*]]
    [clj-kondo.test-utils :refer [lint! make-dirs with-temp-dir]]
    [clojure.java.io :as io]
+   [clojure.set :refer [difference]]
    [clojure.test :as t :refer [deftest is testing]]))
+
+(deftest api-ns-includes-public-test
+  (is (empty?
+       (difference
+        (->> (ns-publics 'clj-kondo.hooks-api)
+             (map (fn [[k v]] [k (deref v)]))
+             (filter (fn [[_ v]] (fn? v)))
+             set)
+        (set hooks.impl/api-ns)))))
 
 (deftest predicates-test
   (is (hooks-api/keyword-node? (parse-string ":foo")))
